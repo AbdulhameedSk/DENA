@@ -2,11 +2,11 @@ const express = require('express');
 const connectDB = require('./db');
 const { signin} = require('./controllers/signin');
 const { signup} = require('./controllers/signup');
-
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
-
+app.use(cors());
 app.post('/signin', signin);
 app.post('/signup', signup);
 
