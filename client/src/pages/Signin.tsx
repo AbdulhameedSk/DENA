@@ -55,7 +55,7 @@ export default function SignIn() {
       const result = await postRequest("/signin", data);
       if (result !== "wrong password" && result !== "user doesnt exist") {
         localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
-        navigate("/friends");
+        navigate("/interests");
       } else {
         setOpen(true);
         setModal(result);

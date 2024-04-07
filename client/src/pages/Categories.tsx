@@ -86,21 +86,7 @@ export default function Categories() {
   };
 
   const submitCategories = async () => {
-    const updatedData = { ...data, interestCategories: selectedCategories };
-    try {
-      const result = await postRequest("/signup", updatedData);
-      if (result.token) {
-        localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
-        navigate("/friends");
-      } else {
-        setOpen(true);
-        setModal(result);
-      }
-    } catch (error) {
-      console.error(error);
-      setOpen(true);
-      setModal("something went wrong");
-    }
+    navigate("/friends");
   };
 
   return (
