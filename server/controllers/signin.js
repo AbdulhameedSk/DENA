@@ -29,6 +29,7 @@ const signin = async (req, res) => {
       });
     }
     const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET);
+    localStorage.setItem("token", token);
     return res.status(200).json({ token, message: "Logged in successfully" });
   } catch (error) {
     console.error(error);
