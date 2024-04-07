@@ -1,6 +1,6 @@
 export default async function postRequest(path: string, payload: object) {
   try {
-    const res = await fetch(import.meta.env.VITE_backend_url + path, {
+    const res = await fetch("http://localhost:3000" + path, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

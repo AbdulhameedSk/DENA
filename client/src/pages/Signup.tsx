@@ -62,28 +62,23 @@ export default function Signup() {
     formState: { errors, isSubmitting },
   } = useForm<FormFeilds>({ resolver: zodResolver(schema) });
 
-  const onSubmit: SubmitHandler<FormFeilds> = async (data: object) => {
-    if (accepted) {
-      try {
-        const result = await postRequest("/check", data);
-        if (result == "user doesnt exist") {
-          dispatch(registerUser(data));
-          navigate("/interests");
-        } else {
-          setOpen(true);
-          setModal(result);
-        }
-      } catch (error: any) {
-        setOpen(true);
-        setModal(error);
-      }
-      console.log(data);
+ const onSubmit: SubmitHandler<FormFeilds> = async (data: object) => {
+  try {
+    const result = await postRequest("/signup", data);
+    if (result == "User Already Exists") {
+      dispatch(registerUser(data));
+      navigate("/signin");
     } else {
       setOpen(true);
-      setModal("please accept the Terms & Conditions");
+      setModal(JSON.stringify(result));
+      
     }
-  };
-
+  } catch (error: any) {
+    setOpen(true);
+    setModal(JSON.stringify(error.message));
+  }
+  console.log(data);
+};
   return (
     <Box
       sx={{
