@@ -1,6 +1,6 @@
 export default async function postRequest(path: string, payload: object) {
   try {
-    const res = await fetch("http://localhost:3000" + path, {
+    const res = await fetch("https://denaurlen-i0lp.onrender.com" + path, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
