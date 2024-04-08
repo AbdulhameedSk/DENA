@@ -50,30 +50,32 @@ export default function SignIn() {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const onSubmit: SubmitHandler<FormFeilds> = async (data) => {
-  try {
-    const result = await postRequest("/signin", data);
-    if (result.message !== "Invalid username or password") {
-      localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
-      const existingToken = localStorage.getItem("denaurlen-token");
-      if (!existingToken) {
-        navigate("/signup");
+    try {
+      const result = await postRequest("/signin", data);
+      if (result.message !== "Invalid username or password") {
+        localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
+        const existingToken = localStorage.getItem("denaurlen-token");
+        if (!existingToken) {
+          navigate("/login"); // Change navigation to "/login" if no token exists
+          return; // Return to prevent further execution
+        }
+        setOpen(true); // Open the modal
+        setModal("Login successful");
+        setTimeout(() => {
+          navigate("/friends");
+        }, 1000);
+      } else {
+        setOpen(true);
+        setModal(result.message);
       }
-      setOpen(true); // Open the modal
-      setModal("Login successful");
-      setTimeout(() => {
-        navigate("/friends");
-      }, 1000);
-    } else {
+    } catch (error) {
+      console.error(error);
       setOpen(true);
-      setModal(result.message);
+      setModal("Something went wrong");
     }
-  } catch (error) {
-    console.error(error);
-    setOpen(true);
-    setModal("Something went wrong");
-  }
-  console.log(data);
-};
+    console.log(data);
+  };
+
   return (
     <Box
       sx={{
