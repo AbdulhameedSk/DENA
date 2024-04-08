@@ -53,13 +53,13 @@ export default function SignIn() {
     try {
       const result = await postRequest("/signin", data);
       if (result.message !== "Invalid username or password") {
+        
+        localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
         const existingToken = localStorage.getItem("denaurlen-token");
-        if (existingToken) {
-          window.alert("Token already exists in local storage");
+        if (!existingToken) {
+          window.alert("Token not found");
           return;
         }
-        localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
-
         setOpen(true); // Open the modal
         setModal("Login successful");
         setTimeout(() => {
