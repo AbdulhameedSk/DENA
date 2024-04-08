@@ -1,6 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import Signup from "./pages/Signup";
+import { useNavigate } from 'react-router-dom';
+
 import SignIn from "./pages/Signin";
 import Categories from "./pages/Categories";
 import FriendSuggestions from "./pages/FriendsSuggestions";
@@ -43,6 +45,7 @@ const style = {
 };
 
 function App() {
+  const navigate = useNavigate();
   const [verified, setVerified] = useState<any>(false);
   const [modal, setModal] = useState("");
   const [open, setOpen] = useState(false);
@@ -51,25 +54,12 @@ function App() {
   useEffect(() => {
     const jsonValue = localStorage.getItem("denaurlen-token");
 
-    const verifyUser = async (arg: string) => {
-      try {
-        const response = await fetch(
-          import.meta.env.VITE_backend_url + "/verify",
-          {
-            headers: { Authorization: `Bearer ${arg}` },
-          }
-        );
-        await response.json();
-      } catch (error) {
-        console.error(error);
-        setOpen(true);
-        setModal("something went wrong");
-      }
-    };
+    if (jsonValue) {
+      setVerified(true);
+      setModal("you are verified Successfully");
 
-    if (jsonValue != null && jsonValue != "undefined") {
-      const isVerified = verifyUser(JSON.parse(jsonValue));
-      setVerified(isVerified);
+    } else {
+      navigate("/login");
     }
   }, []);
 

@@ -67,13 +67,14 @@ export default function Signup() {
     const result = await postRequest("/signup", data);
     if (result == "User Already Exists") {
       dispatch(registerUser(data));
-      navigate("/signin");
+      navigate("/interests");
     } else {
       setOpen(true);
       setModal("User created Successfully");
       localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
+      
       setTimeout(() => {
-        navigate('/signin')
+        navigate('/interests')
       }, 1000);
       
     }
