@@ -51,23 +51,22 @@ export default function SignIn() {
   const handleClose = () => setOpen(false);
   
   const onSubmit: SubmitHandler<FormFeilds> = async (data) => {
-    try {
-      const result = await postRequest("/signin", data);
-      if (result !== "wrong password" && result !== "user doesnt exist") {
-        localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
-        navigate("/interests");
-      } else {
-        setOpen(true);
-        setModal(JSON.stringify(result.message));
-      }
-    } catch (error) {
-      console.error(error);
+  try {
+    const result = await postRequest("/signin", data);
+    if (result.message !== "Invalid username or password") {
+      localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
+      navigate("/interests");
+    } else {
       setOpen(true);
-      setModal("something went wrong");
+      setModal(result.message);
     }
-    console.log(data);
-  };
-
+  } catch (error) {
+    console.error(error);
+    setOpen(true);
+    setModal("Something went wrong");
+  }
+  console.log(data);
+};
   return (
     <Box
       sx={{
