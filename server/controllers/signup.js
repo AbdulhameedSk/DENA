@@ -1,3 +1,4 @@
+
 const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -40,7 +41,7 @@ const signup = async (req, res) => {
     const token = jwt.sign({ userId: newUser._id }, JWT_SECRET);
     res.status(201).json({
       message: "User Created Successfully",
-      // token: token,
+      token: token,
     });
   } catch (error) {
     console.error(error);

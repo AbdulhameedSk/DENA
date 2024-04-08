@@ -70,7 +70,11 @@ export default function Signup() {
       navigate("/signin");
     } else {
       setOpen(true);
-      setModal(JSON.stringify(result));
+      setModal("User created Successfully");
+      localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
+      setTimeout(() => {
+        navigate('/signin')
+      }, 1000);
       
     }
   } catch (error: any) {

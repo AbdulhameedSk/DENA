@@ -49,7 +49,6 @@ export default function SignIn() {
   const [modal, setModal] = useState("");
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-
   const onSubmit: SubmitHandler<FormFeilds> = async (data) => {
     try {
       const result = await postRequest("/signin", data);
@@ -58,7 +57,7 @@ export default function SignIn() {
         navigate("/interests");
       } else {
         setOpen(true);
-        setModal(result);
+        setModal(JSON.stringify(result.message));
       }
     } catch (error) {
       console.error(error);
