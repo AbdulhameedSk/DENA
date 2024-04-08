@@ -55,7 +55,7 @@ export default function SignIn() {
     const result = await postRequest("/signin", data);
     if (result.message !== "Invalid username or password") {
       localStorage.setItem("denaurlen-token", JSON.stringify(result.token));
-      navigate("/interests");
+      navigate("/friends");
     } else {
       setOpen(true);
       setModal(result.message);
